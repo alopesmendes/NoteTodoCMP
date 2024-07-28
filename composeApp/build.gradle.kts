@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -41,6 +42,11 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
+            // KOIN
+            api(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
         }
     }
 }
@@ -82,3 +88,15 @@ android {
     }
 }
 
+dependencies {
+    add("kspCommonMainMetadata", libs.koin.ksp.compiler)
+    add("kspAndroid", libs.koin.ksp.compiler)
+    add("kspIosX64", libs.koin.ksp.compiler)
+    add("kspIosArm64", libs.koin.ksp.compiler)
+    add("kspIosSimulatorArm64", libs.koin.ksp.compiler)
+}
+
+ksp {
+    arg("KOIN_CONFIG_CHECK","true")
+    arg("KOIN_DEFAULT_MODULE","false")
+}
