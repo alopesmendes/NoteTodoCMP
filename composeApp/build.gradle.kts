@@ -55,6 +55,12 @@ kotlin {
             // KOTLINX
             implementation(libs.kotlinx.collections.immutable)
             implementation(libs.kotlinx.coroutines.core)
+
+            // LIFECYCLE
+            implementation(libs.lifecycle.viewmodel.compose)
+            implementation(libs.lifecycle.viewmodel.savedstate)
+            implementation(libs.lifecycle.runtime.compose)
+            implementation(libs.lifecycle.common)
         }
 
         jvmMain.dependencies {
