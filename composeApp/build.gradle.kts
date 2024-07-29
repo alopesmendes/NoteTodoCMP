@@ -61,6 +61,9 @@ kotlin {
             implementation(libs.lifecycle.viewmodel.savedstate)
             implementation(libs.lifecycle.runtime.compose)
             implementation(libs.lifecycle.common)
+
+            // Navigation
+            implementation(libs.navigation.compose)
         }
 
         jvmMain.dependencies {
