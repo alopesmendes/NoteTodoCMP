@@ -1,3 +1,4 @@
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -8,6 +9,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.mokkery)
 }
 
 kotlin {
@@ -62,12 +64,28 @@ kotlin {
             implementation(libs.lifecycle.runtime.compose)
             implementation(libs.lifecycle.common)
 
-            // Navigation
+            // NAVIGATION
             implementation(libs.navigation.compose)
         }
 
         jvmMain.dependencies {
             runtimeOnly(libs.kotlinx.coroutines.swing)
+        }
+
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlin.test.junit)
+            implementation(libs.kotlin.test.coroutines)
+            implementation(kotlin("test-common"))
+            implementation(kotlin("test-annotations-common"))
+
+            implementation(libs.junit)
+
+            implementation(libs.assertk)
+            implementation(libs.turbine)
+
+            @OptIn(ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
         }
     }
 }
