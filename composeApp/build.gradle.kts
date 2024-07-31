@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.mokkery)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -39,6 +40,9 @@ kotlin {
 
             // KOTLINX
             implementation(libs.kotlinx.coroutines.android)
+
+            // SQLDELIGHT
+            implementation(libs.sqldelight.android.driver)
         }
 
         commonMain.dependencies {
@@ -70,6 +74,11 @@ kotlin {
 
         jvmMain.dependencies {
             runtimeOnly(libs.kotlinx.coroutines.swing)
+            implementation(libs.sqldelight.sqlite.driver)
+        }
+
+        nativeMain.dependencies {
+            implementation(libs.sqldelight.native.driver)
         }
 
         commonTest.dependencies {
@@ -138,4 +147,13 @@ dependencies {
 ksp {
     arg("KOIN_CONFIG_CHECK","true")
     arg("KOIN_DEFAULT_MODULE","false")
+}
+
+sqldelight {
+    databases {
+        create("NoteDatabase") {
+            packageName.set("org.ailtontech.notetodo.database")
+        }
+    }
+
 }
