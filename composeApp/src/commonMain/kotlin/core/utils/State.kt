@@ -1,4 +1,4 @@
-package core.util
+package core.utils
 
 sealed interface State<out T> {
     data object Loading: State<Nothing>
