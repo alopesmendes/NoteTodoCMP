@@ -5,17 +5,19 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import core.presentation.state.ScaffoldItemsState
 
 @Composable
 fun NavigationHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: Routes,
+    scaffoldItemsState: ScaffoldItemsState,
+    onScaffoldItemsState: (ScaffoldItemsState) -> Unit,
 ) {
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = startDestination.fullRoute()
+        startDestination = scaffoldItemsState.currentRoute.fullRoute()
     ) {
         composable(route = Routes.Notes.fullRoute(), arguments = Routes.Notes.navParams()) {
 
