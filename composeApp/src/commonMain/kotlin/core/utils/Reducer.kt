@@ -1,4 +1,4 @@
-package core.util
+package core.utils
 
 import kotlin.reflect.KFunction1
 

@@ -1,4 +1,4 @@
-package core.util
+package core.utils
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
