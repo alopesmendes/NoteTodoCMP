@@ -4,21 +4,25 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.outlined.Category
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import notetodo.composeapp.generated.resources.Res
 import notetodo.composeapp.generated.resources.categories_title
 import notetodo.composeapp.generated.resources.notes_title
 import notetodo.composeapp.generated.resources.settings_title
 import org.jetbrains.compose.resources.StringResource
 
+@Immutable
 sealed class Routes(
     val stringRes: StringResource? = null,
     val icon: ImageVector? = null,
     protected val route: String,
-    private val params: List<Pair<String, NavType<*>>> = emptyList(),
+    private val params: ImmutableList<Pair<String, NavType<*>>> = persistentListOf(),
 ) {
     fun fullRoute(): String = "$route${
         params.map { it.first }.joinToString(
