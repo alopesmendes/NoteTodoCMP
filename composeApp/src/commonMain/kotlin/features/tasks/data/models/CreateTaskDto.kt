@@ -4,6 +4,6 @@ data class CreateTaskDto(
     val title: String,
     val description: String?,
     val priority: PriorityDto,
-    val statusDto: StatusDto,
+    val status: StatusDto,
     val categoryId: Long?,
 )

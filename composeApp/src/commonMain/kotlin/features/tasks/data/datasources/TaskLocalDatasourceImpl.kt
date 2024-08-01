@@ -39,7 +39,7 @@ class TaskLocalDatasourceImpl(
                 description = task.description,
                 category_id = task.categoryId,
                 priority = task.priority,
-                status = task.statusDto,
+                status = task.status,
             )
         }
     }
