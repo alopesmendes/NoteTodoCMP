@@ -26,6 +26,7 @@ mokkery = "2.1.1"
 assertk = "0.28.1"
 kotlin-test-junit = "1.9.25"
 sqldelight = "2.0.2"
+material = "1.6.11"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
@@ -33,6 +34,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+material-icons = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "material" }
 
 # KOIN
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
