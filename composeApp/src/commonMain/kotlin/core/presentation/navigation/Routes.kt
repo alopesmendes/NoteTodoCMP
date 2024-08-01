@@ -63,3 +63,9 @@ sealed class Routes(
         stringRes = Res.string.settings_title,
     )
 }
+
+val bottomBarItems = persistentListOf(
+    Routes.Notes,
+    Routes.Categories,
+    Routes.Settings,
+)

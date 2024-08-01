@@ -4,15 +4,26 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.vector.ImageVector
 import core.presentation.navigation.Routes
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentMapOf
 import org.jetbrains.compose.resources.StringResource
+
+
+typealias OnRouteChange = (Routes, params: List<Any>) -> Unit
+
+typealias OnFloatingActionButtonClick = () -> Unit
+
+typealias OnTopBarActionClick = () -> Unit
 
 @Immutable
 data class ScaffoldItemsState(
-    val currentRoute: Routes? = null,
+    val currentRoute: Routes = Routes.Notes,
+    val onRouteChange: OnRouteChange = { _, _ -> },
+    val onFloatingActionButtonClick: OnFloatingActionButtonClick = {},
     val floatingActionButtonVisible: Boolean = false,
     val floatingActionButtonIcon: ImageVector? = null,
     val floatingActionButtonText: StringResource? = null,
-    val topBarActions: ImmutableList<ImageVector> = persistentListOf(),
+    val topBarActions: ImmutableMap<ImageVector, OnTopBarActionClick> = persistentMapOf(),
     val bottomBarItems: ImmutableList<Routes> = persistentListOf(),
 )
