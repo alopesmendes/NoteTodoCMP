@@ -12,35 +12,38 @@ import core.presentation.components.MainScaffold
 import core.presentation.navigation.NavigationHost
 import core.presentation.state.ScaffoldItemsState
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.KoinContext
 
 @Composable
 @Preview
 fun App() {
     MaterialTheme {
-        val navController = rememberNavController()
-        var scaffoldItemsState by remember {
-            mutableStateOf(
-                ScaffoldItemsState(
-                    onRouteChange = { route, params ->
-                        navController.navigate(
-                            route.navigateTo(params)
-                        )
-                    },
-                )
-            )
-        }
-
-        MainScaffold(
-            modifier = Modifier.fillMaxSize(),
-            scaffoldItemsState = scaffoldItemsState,
-            content = { paddingValues ->
-                NavigationHost(
-                    modifier = Modifier.padding(paddingValues).fillMaxSize(),
-                    navController = navController,
-                    scaffoldItemsState = scaffoldItemsState,
-                    onScaffoldItemsState = { scaffoldItemsState = it }
+        KoinContext {
+            val navController = rememberNavController()
+            var scaffoldItemsState by remember {
+                mutableStateOf(
+                    ScaffoldItemsState(
+                        onRouteChange = { route, params ->
+                            navController.navigate(
+                                route.navigateTo(params)
+                            )
+                        },
+                    )
                 )
             }
-        )
+
+            MainScaffold(
+                modifier = Modifier.fillMaxSize(),
+                scaffoldItemsState = scaffoldItemsState,
+                content = { paddingValues ->
+                    NavigationHost(
+                        modifier = Modifier.padding(paddingValues).fillMaxSize(),
+                        navController = navController,
+                        scaffoldItemsState = scaffoldItemsState,
+                        onScaffoldItemsState = { scaffoldItemsState = it }
+                    )
+                }
+            )
+        }
     }
 }
