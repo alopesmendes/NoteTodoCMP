@@ -1,0 +1,23 @@
+CREATE TABLE categoryEntity (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT  NOT NULL UNIQUE,
+    color TEXT NOT NULL CHECK (LENGTH(color) <= 10) DEFAULT '0xFFFFFFFF'
+);
+
+selectAllCategories:
+SELECT * FROM categoryEntity;
+
+selectCategoryById:
+SELECT * FROM categoryEntity WHERE id = :id;
+
+insertCategory:
+INSERT OR FAIL INTO categoryEntity(name, color) VALUES (:name, :color);
+
+updateCategory:
+UPDATE OR FAIL categoryEntity SET
+    name = COALESCE(:name, name),
+    color = COALESCE(:color, color)
+WHERE id = :id;
+
+deleteCategory:
+DELETE FROM categoryEntity WHERE id = :id;

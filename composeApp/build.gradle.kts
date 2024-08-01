@@ -71,6 +71,11 @@ kotlin {
 
             // NAVIGATION
             implementation(libs.navigation.compose)
+
+            // SQLDELIGHT
+            implementation(libs.sqldelight.primitive.adapters)
+            implementation(libs.sqldelight.coroutines.extensions)
+            implementation(libs.stately.common)
         }
 
         jvmMain.dependencies {
