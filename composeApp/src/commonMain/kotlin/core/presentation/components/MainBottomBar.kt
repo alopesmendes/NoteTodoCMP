@@ -41,7 +41,7 @@ fun MainBottomBar(
                         }
                     },
                     onClick = {
-                        onRouteChange(route)
+                        onRouteChange(route, emptyList())
                     },
                     selected = currentRoute == route,
                     label = if (route.stringRes != null) {
@@ -65,6 +65,6 @@ fun MainBottomBar(
 fun MainBottomBarPreview() {
     MainBottomBar(
         bottomItems = bottomBarItems,
-        onRouteChange = {}
+        onRouteChange = { _, _ -> }
     )
 }
