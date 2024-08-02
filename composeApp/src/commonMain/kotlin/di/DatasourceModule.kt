@@ -1,6 +1,8 @@
 package di
 
 import core.createDatabase
+import features.categories.data.datasources.CategoryDatasource
+import features.categories.data.datasources.CategoryLocalDatasource
 import features.tasks.data.datasources.TaskDatasource
 import features.tasks.data.datasources.TaskLocalDatasourceImpl
 import org.ailtontech.notetodo.database.NoteDatabase
@@ -13,4 +15,6 @@ val datasourceModule = module {
     }
 
     single<TaskDatasource> { TaskLocalDatasourceImpl(get(), get(named("IO_DISPATCHER"))) }
+
+    single<CategoryDatasource> { CategoryLocalDatasource(get(), get(named("IO_DISPATCHER"))) }
 }
