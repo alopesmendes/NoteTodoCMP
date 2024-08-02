@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.Card
 import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,50 +21,58 @@ import androidx.compose.ui.unit.dp
 import features.tasks.presentation.reducers.state.TasksStateItem
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TasksListItem(
     modifier: Modifier = Modifier,
     task: TasksStateItem,
     onClick: () -> Unit,
 ) {
-    Row(
-        modifier = modifier.clickable { onClick() },
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+    Card(
+        modifier = modifier,
+        elevation = 4.dp,
+        onClick = onClick
     ) {
-        Text(
-            text = "#${task.id}",
-            modifier = Modifier
-                .fillMaxHeight()
-                .padding(8.dp),
-            textAlign = TextAlign.Center
-        )
-
-        Divider(
-            modifier = Modifier
-                .fillMaxHeight()
-                .width(1.dp)
-        )
-
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+        Row(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = task.title,
-                style = MaterialTheme.typography.h6
+                text = "#${task.id}",
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(8.dp),
+                textAlign = TextAlign.Center
             )
 
-            Text(
-                text = task.description ?: "",
-                style = MaterialTheme.typography.body1,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 2,
+            Divider(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(1.dp)
             )
+
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text(
+                    text = task.title,
+                    style = MaterialTheme.typography.h6
+                )
+
+                Text(
+                    text = task.description ?: "",
+                    style = MaterialTheme.typography.body1,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 2,
+                )
+            }
         }
     }
+
 }
 
 @Preview

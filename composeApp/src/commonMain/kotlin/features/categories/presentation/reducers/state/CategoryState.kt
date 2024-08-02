@@ -9,5 +9,5 @@ import kotlinx.collections.immutable.persistentListOf
 data class CategoryState(
     val isLoading: Boolean = false,
     val categories: ImmutableList<CategoryStateItem> = persistentListOf(),
-    val error: String = ""
+    val error: String? = null,
 ): Reducer.ViewState

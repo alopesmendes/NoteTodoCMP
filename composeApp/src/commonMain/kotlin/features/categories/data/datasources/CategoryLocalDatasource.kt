@@ -9,6 +9,7 @@ import features.categories.data.models.CategoryDto
 import features.categories.data.models.CreateCategoryDto
 import features.categories.data.models.UpdateCategoryDto
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -16,7 +17,7 @@ import org.ailtontech.notetodo.database.NoteDatabase
 
 class CategoryLocalDatasource(
     database: NoteDatabase,
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ): CategoryDatasource {
     private val query = database.categoryEntityQueries
 

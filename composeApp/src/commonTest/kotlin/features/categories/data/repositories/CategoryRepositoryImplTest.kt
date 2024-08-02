@@ -41,7 +41,7 @@ class CategoryRepositoryImplTest {
     @BeforeTest
     fun setup() {
         categoryDatasource = mock()
-        categoryRepository = CategoryRepositoryImpl(categoryDatasource, dispatcher)
+        categoryRepository = CategoryRepositoryImpl(categoryDatasource)
         Dispatchers.setMain(dispatcher)
     }
 

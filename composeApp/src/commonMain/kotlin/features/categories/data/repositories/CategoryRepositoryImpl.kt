@@ -9,16 +9,13 @@ import features.categories.domain.entities.Category
 import features.categories.domain.entities.CreateCategory
 import features.categories.domain.entities.UpdateCategory
 import features.categories.domain.repositories.CategoryRepository
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 
 class CategoryRepositoryImpl(
     private val categoryDatasource: CategoryDatasource,
-    private val dispatcher: CoroutineDispatcher,
 ): CategoryRepository {
     override fun getCategories(): Flow<Result<List<Category>>> {
         return try {
@@ -43,35 +40,29 @@ class CategoryRepositoryImpl(
     }
 
     override suspend fun createCategory(category: CreateCategory): Result<Unit> {
-        return withContext(dispatcher) {
-            try {
-                categoryDatasource.createCategory(category.mapToCreateCategoryDto())
-                Result.success(Unit)
-            } catch (e: Exception) {
-                Result.failure(e)
-            }
+        return try {
+            categoryDatasource.createCategory(category.mapToCreateCategoryDto())
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 
     override suspend fun updateCategory(category: UpdateCategory): Result<Unit> {
-        return withContext(dispatcher) {
-            try {
-                categoryDatasource.updateCategory(category.mapToUpdateCategoryDto())
-                Result.success(Unit)
-            } catch (e: Exception) {
-                Result.failure(e)
-            }
+        return try {
+            categoryDatasource.updateCategory(category.mapToUpdateCategoryDto())
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 
     override suspend fun deleteCategory(id: Long): Result<Unit> {
-        return withContext(dispatcher) {
-            try {
-                categoryDatasource.deleteCategory(id)
-                Result.success(Unit)
-            } catch (e: Exception) {
-                Result.failure(e)
-            }
+        return try {
+            categoryDatasource.deleteCategory(id)
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 }

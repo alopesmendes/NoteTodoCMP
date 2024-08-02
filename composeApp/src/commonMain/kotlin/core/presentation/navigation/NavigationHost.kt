@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import core.presentation.state.ScaffoldItemsState
+import features.categories.presentation.screens.CategoryScreen
 import features.tasks.presentation.screens.TasksScreen
 
 @Composable
@@ -30,7 +31,11 @@ fun NavigationHost(
         }
 
         composable(route = Routes.Categories.fullRoute(), arguments = Routes.Categories.navParams()) {
-
+            CategoryScreen(
+                modifier = Modifier.fillMaxSize(),
+                scaffoldItemsState = scaffoldItemsState,
+                onScaffoldItemsStateChange = onScaffoldItemsState,
+            )
         }
 
         composable(route = Routes.Settings.fullRoute(), arguments = Routes.Settings.navParams()) {

@@ -10,7 +10,7 @@ import kotlinx.collections.immutable.persistentMapOf
 import org.jetbrains.compose.resources.StringResource
 
 
-typealias OnRouteChange = (Routes, params: List<Any>) -> Unit
+typealias OnRouteChange = (Routes) -> Unit
 
 typealias OnFloatingActionButtonClick = () -> Unit
 
@@ -19,7 +19,7 @@ typealias OnTopBarActionClick = () -> Unit
 @Immutable
 data class ScaffoldItemsState(
     val currentRoute: Routes = Routes.Tasks,
-    val onRouteChange: OnRouteChange = { _, _ -> },
+    val onRouteChange: OnRouteChange = {},
     val onFloatingActionButtonClick: OnFloatingActionButtonClick = {},
     val floatingActionButtonVisible: Boolean = false,
     val floatingActionButtonIcon: ImageVector? = null,
