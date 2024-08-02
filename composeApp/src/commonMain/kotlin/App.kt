@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import core.presentation.components.MainScaffold
 import core.presentation.navigation.NavigationHost
@@ -27,9 +28,9 @@ fun App() {
             var scaffoldItemsState by remember {
                 mutableStateOf(
                     ScaffoldItemsState(
-                        onRouteChange = { route, params ->
+                        onRouteChange = { route ->
                             navController.navigate(
-                                route.navigateTo(params)
+                                route.navigateTo()
                             )
                         },
                         topBarActions = persistentMapOf(
@@ -48,7 +49,10 @@ fun App() {
                 scaffoldItemsState = scaffoldItemsState,
                 content = { paddingValues ->
                     NavigationHost(
-                        modifier = Modifier.padding(paddingValues).fillMaxSize(),
+                        modifier = Modifier
+                            .padding(paddingValues)
+                            .fillMaxSize()
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
                         navController = navController,
                         scaffoldItemsState = scaffoldItemsState,
                         onScaffoldItemsState = { scaffoldItemsState = it }

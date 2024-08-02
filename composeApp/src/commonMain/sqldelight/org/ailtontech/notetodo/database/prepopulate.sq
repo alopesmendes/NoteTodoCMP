@@ -1,7 +1,7 @@
-INSERT OR REPLACE INTO categoryEntity(id, name, color) VALUES (1, 'Sport', '0xFFFFC6C6');
-INSERT OR REPLACE INTO categoryEntity(id, name, color) VALUES (2, 'Study', '0xFFCADABF');
-INSERT OR REPLACE INTO categoryEntity(id, name, color) VALUES (3, 'Chores', '0xFFBBE9FF');
-INSERT OR REPLACE INTO categoryEntity(id, name, color) VALUES (4, 'Work', '0xFFFA7070');
+INSERT OR REPLACE INTO categoryEntity(id, name, color) VALUES (1, 'Sport', '#FFFFC6C6');
+INSERT OR REPLACE INTO categoryEntity(id, name, color) VALUES (2, 'Study', '#FFCADABF');
+INSERT OR REPLACE INTO categoryEntity(id, name, color) VALUES (3, 'Chores', '#FFBBE9FF');
+INSERT OR REPLACE INTO categoryEntity(id, name, color) VALUES (4, 'Work', '#FFFA7070');
 
 INSERT OR REPLACE INTO taskEntity(
     id,
