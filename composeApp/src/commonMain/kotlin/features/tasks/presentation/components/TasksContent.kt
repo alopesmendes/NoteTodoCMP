@@ -12,6 +12,7 @@ fun TaskContent(
     modifier: Modifier = Modifier,
     state: TasksState,
     onTaskClick: (Long) -> Unit = {},
+    onTaskDelete: (Long) -> Unit = {},
 ) {
     when {
         state.isLoading -> {
@@ -29,6 +30,9 @@ fun TaskContent(
                 tasksStateItems = state.tasks,
                 onTaskClick = {
                     onTaskClick(it.id)
+                },
+                onTaskDelete = {
+                    onTaskDelete(it.id)
                 }
             )
         }

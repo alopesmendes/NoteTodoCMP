@@ -18,6 +18,7 @@ fun TasksListView(
     modifier: Modifier = Modifier,
     tasksStateItems: ImmutableList<TasksStateItem>,
     onTaskClick: (TasksStateItem) -> Unit = {},
+    onTaskDelete: (TasksStateItem) -> Unit = {},
 ) {
     LazyColumn(
         modifier = modifier,
@@ -28,7 +29,8 @@ fun TasksListView(
             TasksListItem(
                 modifier = Modifier.fillMaxWidth(),
                 task = it,
-                onClick = { onTaskClick(it) }
+                onClick = { onTaskClick(it) },
+                onDeleteClick = { onTaskDelete(it) }
             )
         }
     }

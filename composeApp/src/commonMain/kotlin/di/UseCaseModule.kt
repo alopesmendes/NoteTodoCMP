@@ -2,6 +2,8 @@ package di
 
 import features.categories.domain.useCases.GetCategoriesUseCase
 import features.categories.domain.useCases.GetCategoriesUseCaseImpl
+import features.tasks.domain.useCases.DeleteTaskUseCase
+import features.tasks.domain.useCases.DeleteTaskUseCaseImpl
 import features.tasks.domain.useCases.GetTasksUseCase
 import features.tasks.domain.useCases.GetTasksUseCaseImpl
 import org.koin.core.module.dsl.bind
@@ -12,4 +14,6 @@ val useCaseModule = module {
     singleOf(::GetTasksUseCaseImpl) { bind<GetTasksUseCase>() }
 
     singleOf(::GetCategoriesUseCaseImpl) { bind<GetCategoriesUseCase>() }
+
+    singleOf(::DeleteTaskUseCaseImpl) { bind<DeleteTaskUseCase>() }
 }

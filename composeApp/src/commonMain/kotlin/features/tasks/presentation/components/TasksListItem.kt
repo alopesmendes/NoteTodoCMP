@@ -1,6 +1,5 @@
 package features.tasks.presentation.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,8 +9,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +30,7 @@ fun TasksListItem(
     modifier: Modifier = Modifier,
     task: TasksStateItem,
     onClick: () -> Unit,
+    onDeleteClick: () -> Unit,
 ) {
     Card(
         modifier = modifier,
@@ -70,6 +74,19 @@ fun TasksListItem(
                     maxLines = 2,
                 )
             }
+
+            IconButton(
+                onClick = onDeleteClick,
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(8.dp),
+            ) {
+                Icon(
+                    Icons.Outlined.Delete,
+                    contentDescription = "Delete",
+                    tint = MaterialTheme.colors.error,
+                )
+            }
         }
     }
 
@@ -87,5 +104,6 @@ fun TasksListItemPreview() {
             status = "IN_PROGRESS"
         ),
         onClick = { },
+        onDeleteClick = { }
     )
 }

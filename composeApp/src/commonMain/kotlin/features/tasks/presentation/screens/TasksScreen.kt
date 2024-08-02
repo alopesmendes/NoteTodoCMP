@@ -11,6 +11,8 @@ import core.presentation.navigation.Routes
 import core.presentation.navigation.bottomBarItems
 import core.presentation.state.ScaffoldItemsState
 import features.tasks.presentation.components.TaskContent
+import features.tasks.presentation.reducers.TasksEffect
+import features.tasks.presentation.reducers.TasksIntent
 import features.tasks.presentation.viewModels.TasksViewModel
 import notetodo.composeapp.generated.resources.Res
 import notetodo.composeapp.generated.resources.save_note
@@ -36,7 +38,9 @@ fun TasksScreen(
                 floatingActionButtonText = Res.string.save_note,
                 floatingActionButtonIcon = Icons.Outlined.Add,
                 onFloatingActionButtonClick = {
-
+                    viewModel.sendEffect(
+                        TasksEffect.ShowDialogTaskDetail()
+                    )
                 },
             )
         )
@@ -46,7 +50,14 @@ fun TasksScreen(
         modifier = modifier,
         state = state,
         onTaskClick = {
-
+            viewModel.sendEffect(
+                TasksEffect.ShowDialogTaskDetail(it)
+            )
         },
+        onTaskDelete = {
+            viewModel.sendIntent(
+                TasksIntent.DeleteTask(it)
+            )
+        }
     )
 }
