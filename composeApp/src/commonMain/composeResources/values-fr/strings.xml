@@ -7,4 +7,6 @@
     <string name="settings_title">Paramètres</string>
     <string name="save_note">Sauvegarder la tâche</string>
     <string name="save_category">Sauvegarder la catégorie</string>
+    <string name="cancel">Annuler</string>
+    <string name="confirm">Confirmer</string>
 </resources>

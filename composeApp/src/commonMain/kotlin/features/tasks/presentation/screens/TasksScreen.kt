@@ -10,6 +10,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import core.presentation.navigation.Routes
 import core.presentation.navigation.bottomBarItems
 import core.presentation.state.ScaffoldItemsState
+import core.utils.Tools.rememberFlowWithLifecycle
 import features.tasks.presentation.components.TaskContent
 import features.tasks.presentation.reducers.TasksEffect
 import features.tasks.presentation.reducers.TasksIntent
@@ -28,6 +29,7 @@ fun TasksScreen(
     onScaffoldItemsState: (ScaffoldItemsState) -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val effect = rememberFlowWithLifecycle(viewModel.effects)
 
     LaunchedEffect(Unit) {
         onScaffoldItemsState(
@@ -38,25 +40,44 @@ fun TasksScreen(
                 floatingActionButtonText = Res.string.save_note,
                 floatingActionButtonIcon = Icons.Outlined.Add,
                 onFloatingActionButtonClick = {
-                    viewModel.sendEffect(
-                        TasksEffect.ShowDialogTaskDetail()
+                    viewModel.sendIntent(
+                        TasksIntent.TaskDetailDialogVisibility(true)
                     )
                 },
             )
         )
     }
 
+    LaunchedEffect(effect) {
+        effect.collect {
+            when (it) {
+                is TasksEffect.ShowDialogTaskDetail -> {
+                }
+            }
+        }
+    }
+
     TaskContent(
         modifier = modifier,
         state = state,
         onTaskClick = {
-            viewModel.sendEffect(
-                TasksEffect.ShowDialogTaskDetail(it)
+            viewModel.sendIntent(
+                TasksIntent.TaskDetailDialogVisibility(true)
             )
         },
         onTaskDelete = {
             viewModel.sendIntent(
                 TasksIntent.DeleteTask(it)
+            )
+        },
+        onVisibilityChange = {
+            viewModel.sendIntent(
+                TasksIntent.TaskDetailDialogVisibility(it)
+            )
+        },
+        onSaveTask = {
+            viewModel.sendIntent(
+                TasksIntent.CreateTask(it.title, it.description ?: "")
             )
         }
     )
