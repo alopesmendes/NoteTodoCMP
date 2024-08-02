@@ -27,6 +27,7 @@ assertk = "0.28.1"
 kotlin-test-junit = "1.9.25"
 sqldelight = "2.0.2"
 material = "1.6.11"
+stately-common = "2.0.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
@@ -41,6 +42,7 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin-compose-viewmodel" }
 koin-ksp-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-ksp" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 
 # KOTLINX
 ## COROUTINES
@@ -74,6 +76,9 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 sqldelight-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
+sqldelight-primitive-adapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
+sqldelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+stately-common = { module = "co.touchlab:stately-common", version.ref = "stately-common" } # (needed by SQLDeligt)
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

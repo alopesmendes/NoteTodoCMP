@@ -1,0 +1,46 @@
+import features.tasks.data.models.PriorityDto;
+import features.tasks.data.models.StatusDto;
+
+CREATE TABLE IF NOT EXISTS taskEntity(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT,
+    category_id INTEGER,
+    priority TEXT AS PriorityDto NOT NULL,
+    status TEXT AS StatusDto NOT NULL,
+
+    FOREIGN KEY (category_id) REFERENCES categoryEntity(id)
+);
+
+selectAllTasks:
+SELECT * FROM taskEntity;
+
+selectTaskById:
+SELECT * FROM taskEntity WHERE id = :id;
+
+insertTask:
+INSERT OR FAIL INTO taskEntity(
+    title,
+    description,
+    category_id,
+    priority,
+    status
+) VALUES (
+:title,
+:description,
+:category_id,
+:priority,
+:status
+);
+
+updateTask:
+UPDATE OR FAIL taskEntity SET
+    title = COALESCE(:title, title),
+    description = COALESCE(:description, description),
+    category_id = COALESCE(:category_id, category_id),
+    priority = COALESCE(:priority, priority),
+    status = COALESCE(:status, status)
+WHERE id = :id;
+
+deleteTask:
+DELETE FROM taskEntity WHERE id = :id;
