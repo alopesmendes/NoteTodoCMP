@@ -18,7 +18,7 @@ typealias OnTopBarActionClick = () -> Unit
 
 @Immutable
 data class ScaffoldItemsState(
-    val currentRoute: Routes = Routes.Notes,
+    val currentRoute: Routes = Routes.Tasks,
     val onRouteChange: OnRouteChange = { _, _ -> },
     val onFloatingActionButtonClick: OnFloatingActionButtonClick = {},
     val floatingActionButtonVisible: Boolean = false,

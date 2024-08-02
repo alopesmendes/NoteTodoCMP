@@ -43,6 +43,9 @@ kotlin {
 
             // SQLDELIGHT
             implementation(libs.sqldelight.android.driver)
+
+            // KOIN
+            implementation(libs.koin.android)
         }
 
         commonMain.dependencies {

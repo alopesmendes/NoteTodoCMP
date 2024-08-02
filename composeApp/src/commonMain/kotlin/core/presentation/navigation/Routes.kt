@@ -45,8 +45,8 @@ sealed class Routes(
         )
     }"
 
-    data object Notes: Routes(
-        route = "notes",
+    data object Tasks: Routes(
+        route = "tasks",
         icon = Icons.AutoMirrored.Outlined.List,
         stringRes = Res.string.notes_title
     )
@@ -65,7 +65,7 @@ sealed class Routes(
 }
 
 val bottomBarItems = persistentListOf(
-    Routes.Notes,
+    Routes.Tasks,
     Routes.Categories,
     Routes.Settings,
 )
