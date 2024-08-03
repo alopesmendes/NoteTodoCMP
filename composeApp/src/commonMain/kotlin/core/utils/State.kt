@@ -7,3 +7,9 @@ sealed interface State<out T> {
 
     data class Error(val message: String): State<Nothing>
 }
+
+fun <T> State<T>.onSuccess(block: (T) -> Unit): Unit {
+    if (this is State.Success) {
+        block(data)
+    }
+}

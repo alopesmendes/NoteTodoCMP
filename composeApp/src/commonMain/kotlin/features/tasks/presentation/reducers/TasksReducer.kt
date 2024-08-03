@@ -1,6 +1,7 @@
 package features.tasks.presentation.reducers
 
 import core.utils.Reducer
+import core.utils.onSuccess
 import features.tasks.domain.entities.CreateTask
 import features.tasks.domain.entities.Priority
 import features.tasks.domain.entities.Status
@@ -9,7 +10,7 @@ import features.tasks.domain.useCases.DeleteTaskUseCase
 import features.tasks.domain.useCases.GetTasksUseCase
 import features.tasks.presentation.mapper.mapToTasksState
 import features.tasks.presentation.reducers.state.TasksState
-import kotlinx.coroutines.flow.collectLatest
+import io.github.aakira.napier.Napier
 import kotlin.reflect.KFunction1
 
 class TasksReducer(
@@ -25,15 +26,19 @@ class TasksReducer(
     ) {
         when (intent) {
             is TasksIntent.FetchTasks -> {
-                getTasksUseCase().collectLatest { state ->
+                getTasksUseCase().collect { state ->
+                    Napier.i("Fetching tasks... $state")
                     updateState.invoke(state::mapToTasksState)
                 }
             }
 
             is TasksIntent.DeleteTask -> {
-                deleteTaskUseCase(intent.id).collectLatest { state ->
+                deleteTaskUseCase(intent.id).collect { state ->
                     updateState.invoke(state::mapToTasksState)
-                    sendIntent(TasksIntent.FetchTasks)
+
+                    state.onSuccess {
+                        sendIntent(TasksIntent.FetchTasks)
+                    }
                 }
             }
 
@@ -42,6 +47,7 @@ class TasksReducer(
             }
 
             is TasksIntent.CreateTask -> {
+                Napier.i("Creating task... $intent")
                 createTaskUseCase(
                     CreateTask(
                         title = intent.title,
@@ -49,9 +55,14 @@ class TasksReducer(
                         priority = Priority.LOW,
                         status = Status.TODO, categoryId = null,
                     )
-                ).collectLatest { state ->
+                ).collect { state ->
+                    Napier.i("Creating task... $state")
                     updateState.invoke(state::mapToTasksState)
-                    sendIntent(TasksIntent.FetchTasks)
+
+                    state.onSuccess {
+                        Napier.i("Task created successfully")
+                        sendIntent(TasksIntent.FetchTasks)
+                    }
                 }
             }
         }

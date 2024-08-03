@@ -1,17 +1,14 @@
 package features.tasks.data.repositories
 
-import app.cash.turbine.test
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import dev.mokkery.answering.returns
 import dev.mokkery.answering.throws
 import dev.mokkery.every
-import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
 import dev.mokkery.verify
 import dev.mokkery.verify.VerifyMode.Companion.exactly
-import dev.mokkery.verifySuspend
 import features.tasks.data.datasources.TaskDatasource
 import features.tasks.data.mapper.mapToCreateTaskDto
 import features.tasks.data.mapper.mapToTask
@@ -27,7 +24,6 @@ import features.tasks.domain.entities.UpdateTask
 import features.tasks.domain.repositories.TaskRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -66,20 +62,15 @@ class TaskRepositoryImplTest {
                 categoryId = null,
             )
         }
-        val result = flowOf(tasks)
 
         // when:
-        every { taskDatasource.findTasks() } returns result
+        every { taskDatasource.findTasks() } returns tasks
         val actual = taskRepository.getTasks()
 
         // then:
         val expected = Result.success(tasks.mapToTaskList())
-        actual.test {
-            verify(exactly(1)) { taskDatasource.findTasks() }
-
-            assertThat(awaitItem()).isEqualTo(expected)
-            awaitComplete()
-        }
+        verify(exactly(1)) { taskDatasource.findTasks() }
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
@@ -92,12 +83,8 @@ class TaskRepositoryImplTest {
         val actual = taskRepository.getTasks()
 
         // then:
-        actual.test {
-            verify(exactly(1)) { taskDatasource.findTasks() }
-
-            assertThat(awaitItem()).isEqualTo(Result.failure(exception))
-            awaitComplete()
-        }
+        verify(exactly(1)) { taskDatasource.findTasks() }
+        assertThat(actual).isEqualTo(Result.failure(exception))
     }
 
     @Test
@@ -112,20 +99,16 @@ class TaskRepositoryImplTest {
             status = StatusDto.IN_PROGRESS,
             categoryId = null,
         )
-        val result = flowOf(taskDto)
 
         // when:
-        every { taskDatasource.findTaskById(id) } returns result
+        every { taskDatasource.findTaskById(id) } returns taskDto
         val actual = taskRepository.getTaskById(id)
 
         // then:
         val expected = Result.success(taskDto.mapToTask())
-        actual.test {
-            verify(exactly(1)) { taskDatasource.findTaskById(any()) }
+        verify(exactly(1)) { taskDatasource.findTaskById(any()) }
 
-            assertThat(awaitItem()).isEqualTo(expected)
-            awaitComplete()
-        }
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
@@ -139,12 +122,8 @@ class TaskRepositoryImplTest {
         val actual = taskRepository.getTaskById(id)
 
         // then:
-        actual.test {
-            verify(exactly(1)) { taskDatasource.findTaskById(any()) }
-
-            assertThat(awaitItem()).isEqualTo(Result.failure(exception))
-            awaitComplete()
-        }
+        verify(exactly(1)) { taskDatasource.findTaskById(any()) }
+        assertThat(actual).isEqualTo(Result.failure(exception))
     }
 
     @Test
@@ -160,12 +139,12 @@ class TaskRepositoryImplTest {
         val createTaskDto = createTask.mapToCreateTaskDto()
 
         // when:
-        everySuspend { taskDatasource.createTask(createTaskDto) } returns Unit
+        every { taskDatasource.createTask(createTaskDto) } returns Unit
         val actual = taskRepository.createTask(createTask)
 
 
         // then:
-        verifySuspend(exactly(1)) { taskDatasource.createTask(any()) }
+        verify(exactly(1)) { taskDatasource.createTask(any()) }
 
         assertThat(actual).isEqualTo(Result.success(Unit))
 
@@ -185,11 +164,11 @@ class TaskRepositoryImplTest {
         val createTaskDto = createTask.mapToCreateTaskDto()
 
         // when:
-        everySuspend { taskDatasource.createTask(createTaskDto) } throws exception
+        every { taskDatasource.createTask(createTaskDto) } throws exception
         val actual = taskRepository.createTask(createTask)
 
         // then:
-        verifySuspend(exactly(1)) { taskDatasource.createTask(any()) }
+        verify(exactly(1)) { taskDatasource.createTask(any()) }
 
         assertThat(actual).isEqualTo(Result.failure(exception))
     }
@@ -209,11 +188,11 @@ class TaskRepositoryImplTest {
         val updateTaskDto = updateTask.mapToUpdateTaskDto()
 
         // when:
-        everySuspend { taskDatasource.updateTask(updateTaskDto) } returns Unit
+        every { taskDatasource.updateTask(updateTaskDto) } returns Unit
         val actual = taskRepository.updateTask(updateTask)
 
         // then:
-        verifySuspend(exactly(1)) { taskDatasource.updateTask(any()) }
+        verify(exactly(1)) { taskDatasource.updateTask(any()) }
 
         assertThat(actual).isEqualTo(Result.success(Unit))
     }
@@ -232,11 +211,11 @@ class TaskRepositoryImplTest {
         val updateTaskDto = updateTask.mapToUpdateTaskDto()
 
         // when:
-        everySuspend { taskDatasource.updateTask(updateTaskDto) } throws exception
+        every { taskDatasource.updateTask(updateTaskDto) } throws exception
         val actual = taskRepository.updateTask(updateTask)
 
         // then:
-        verifySuspend(exactly(1)) { taskDatasource.updateTask(any()) }
+        verify(exactly(1)) { taskDatasource.updateTask(any()) }
 
         assertThat(actual).isEqualTo(Result.failure(exception))
     }
@@ -247,11 +226,11 @@ class TaskRepositoryImplTest {
         val id = 1L
 
         // when:
-        everySuspend { taskDatasource.deleteTask(id) } returns Unit
+        every { taskDatasource.deleteTask(id) } returns Unit
         val actual = taskRepository.deleteTask(id)
 
         // then:
-        verifySuspend(exactly(1)) { taskDatasource.deleteTask(any()) }
+        verify(exactly(1)) { taskDatasource.deleteTask(any()) }
 
         assertThat(actual).isEqualTo(Result.success(Unit))
     }
@@ -263,11 +242,11 @@ class TaskRepositoryImplTest {
         val exception = Exception()
 
         // when:
-        everySuspend { taskDatasource.deleteTask(id) } throws exception
+        every { taskDatasource.deleteTask(id) } throws exception
         val actual = taskRepository.deleteTask(id)
 
         // then:
-        verifySuspend(exactly(1)) { taskDatasource.deleteTask(any()) }
+        verify(exactly(1)) { taskDatasource.deleteTask(any()) }
 
         assertThat(actual).isEqualTo(Result.failure(exception))
     }

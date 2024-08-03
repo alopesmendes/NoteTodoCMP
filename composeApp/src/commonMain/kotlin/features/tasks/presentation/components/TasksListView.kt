@@ -1,5 +1,6 @@
 package features.tasks.presentation.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,7 +28,9 @@ fun TasksListView(
     ) {
         items(tasksStateItems, key = { it.id }) {
             TasksListItem(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .animateItem(),
                 task = it,
                 onClick = { onTaskClick(it) },
                 onDeleteClick = { onTaskDelete(it) }

@@ -9,48 +9,49 @@ import features.tasks.domain.entities.CreateTask
 import features.tasks.domain.entities.Task
 import features.tasks.domain.entities.UpdateTask
 import features.tasks.domain.repositories.TaskRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
+import io.github.aakira.napier.Napier
 
 class TaskRepositoryImpl(
     private val taskDatasource: TaskDatasource
 ): TaskRepository {
-    override fun getTasks(): Flow<Result<List<Task>>> {
+    override fun getTasks(): Result<List<Task>> {
         return try {
-            taskDatasource
+            val tasks = taskDatasource
                 .findTasks()
-                .map { Result.success(it.mapToTaskList()) }
-                .catch { emit(Result.failure(it)) }
-        } catch (e: Exception) {
-            flowOf(Result.failure(e))
-        }
-    }
-
-    override fun getTaskById(id: Long): Flow<Result<Task>> {
-        return try {
-            taskDatasource
-                .findTaskById(id)
-                .map { Result.success(it.mapToTask()) }
-                .catch { emit(Result.failure(it)) }
-        } catch (e: Exception) {
-            flowOf(Result.failure(e))
-        }
-    }
-
-    override suspend fun createTask(
-        createTask: CreateTask,
-    ): Result<Unit> {
-        return try {
-            taskDatasource.createTask(createTask.mapToCreateTaskDto())
-            Result.success(Unit)
+                .mapToTaskList()
+            Result.success(tasks)
         } catch (e: Exception) {
             Result.failure(e)
         }
     }
 
-    override suspend fun updateTask(
+    override fun getTaskById(id: Long): Result<Task> {
+        return try {
+            val task = taskDatasource.findTaskById(id)
+            if (task != null) {
+                Result.success(task.mapToTask())
+            } else {
+                Result.failure(IllegalStateException("Task not found"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override fun createTask(
+        createTask: CreateTask,
+    ): Result<Unit> {
+        return try {
+            taskDatasource.createTask(createTask.mapToCreateTaskDto())
+            Napier.i("Task created")
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Napier.e("Error: ${e.message}")
+            Result.failure(e)
+        }
+    }
+
+    override fun updateTask(
         updateTask: UpdateTask,
     ): Result<Unit> {
         return try {
@@ -61,7 +62,7 @@ class TaskRepositoryImpl(
         }
     }
 
-    override suspend fun deleteTask(id: Long): Result<Unit> {
+    override fun deleteTask(id: Long): Result<Unit> {
         return try {
             taskDatasource.deleteTask(id)
             Result.success(Unit)

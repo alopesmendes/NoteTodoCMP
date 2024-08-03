@@ -4,9 +4,7 @@ import core.utils.State
 import features.tasks.domain.entities.Task
 import features.tasks.domain.repositories.TaskRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 
 class GetTasksUseCaseImpl(
     private val taskRepository: TaskRepository
@@ -15,17 +13,16 @@ class GetTasksUseCaseImpl(
         emit(State.Loading)
 
         try {
-            val tasksFlow = taskRepository.getTasks().map { result ->
-                result.fold(
-                    onSuccess = {
-                        State.Success(it)
-                    },
-                    onFailure = {
-                        State.Error(it.message ?: "")
-                    },
-                )
-            }
-            emitAll(tasksFlow)
+            val result = taskRepository.getTasks()
+            val state = result.fold(
+                onSuccess = {
+                    State.Success(it)
+                },
+                onFailure = {
+                    State.Error(it.message ?: "")
+                }
+            )
+            emit(state)
         } catch (e: Exception) {
             emit(State.Error(e.message ?: ""))
         }

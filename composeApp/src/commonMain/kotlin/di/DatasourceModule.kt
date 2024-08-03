@@ -14,7 +14,7 @@ val datasourceModule = module {
         createDatabase(get())
     }
 
-    single<TaskDatasource> { TaskLocalDatasourceImpl(get(), get(named("IO_DISPATCHER"))) }
+    single<TaskDatasource> { TaskLocalDatasourceImpl(get()) }
 
     single<CategoryDatasource> { CategoryLocalDatasource(get(), get(named("IO_DISPATCHER"))) }
 }

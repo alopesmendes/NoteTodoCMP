@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Card
@@ -32,13 +33,13 @@ fun TasksListItem(
     onClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
-    Card(
+   Card(
         modifier = modifier,
         elevation = 4.dp,
         onClick = onClick
     ) {
         Row(
-            modifier = modifier,
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {

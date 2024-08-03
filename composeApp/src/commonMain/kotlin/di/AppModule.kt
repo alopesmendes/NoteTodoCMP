@@ -29,14 +29,6 @@ fun initializeKoin(
 ) {
     startKoin {
         appDeclaration()
-        modules(
-            platformModule(),
-            datasourceModule,
-            repositoryModule,
-            useCaseModule,
-            reducerModule,
-            viewModelModule,
-            appModule,
-        )
+        modules(modules)
     }
 }

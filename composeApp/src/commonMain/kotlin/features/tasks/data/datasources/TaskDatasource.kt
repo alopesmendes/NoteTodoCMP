@@ -6,13 +6,13 @@ import features.tasks.data.models.UpdateTaskDto
 import kotlinx.coroutines.flow.Flow
 
 interface TaskDatasource {
-    fun findTasks(): Flow<List<TaskDto>>
+    fun findTasks(): List<TaskDto>
 
-    fun findTaskById(id: Long): Flow<TaskDto>
+    fun findTaskById(id: Long): TaskDto?
 
-    suspend fun createTask(task: CreateTaskDto)
+    fun createTask(task: CreateTaskDto)
 
-    suspend fun updateTask(task: UpdateTaskDto)
+    fun updateTask(task: UpdateTaskDto)
 
-    suspend fun deleteTask(id: Long)
+    fun deleteTask(id: Long)
 }

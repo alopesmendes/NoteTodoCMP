@@ -5,11 +5,11 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import core.utils.State
 import dev.mokkery.answering.returns
-import dev.mokkery.everySuspend
+import dev.mokkery.every
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
+import dev.mokkery.verify
 import dev.mokkery.verify.VerifyMode.Companion.exactly
-import dev.mokkery.verifySuspend
 import features.tasks.domain.repositories.TaskRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -46,12 +46,12 @@ class DeleteTaskUseCaseImplTest{
         val result = Result.success(Unit)
 
         // when:
-        everySuspend { taskRepository.deleteTask(id) } returns result
+        every { taskRepository.deleteTask(id) } returns result
         val actual = deleteTaskUseCase(id)
 
         // then:
         actual.test {
-            verifySuspend(exactly(1)) { taskRepository.deleteTask(any()) }
+            verify(exactly(1)) { taskRepository.deleteTask(any()) }
 
             assertThat(awaitItem()).isEqualTo(State.Loading)
             assertThat(awaitItem()).isEqualTo(State.Success(Unit))
@@ -68,12 +68,12 @@ class DeleteTaskUseCaseImplTest{
         val result = Result.failure<Unit>(exception)
 
         // when:
-        everySuspend { taskRepository.deleteTask(id) } returns result
+        every { taskRepository.deleteTask(id) } returns result
         val actual = deleteTaskUseCase(id)
 
         // then:
         actual.test {
-            verifySuspend(exactly(1)) { taskRepository.deleteTask(any()) }
+            verify(exactly(1)) { taskRepository.deleteTask(any()) }
 
             assertThat(awaitItem()).isEqualTo(State.Loading)
             assertThat(awaitItem()).isEqualTo(State.Error(exception.message ?: ""))

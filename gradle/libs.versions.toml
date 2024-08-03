@@ -10,7 +10,7 @@ androidx-core-ktx = "1.13.1"
 androidx-espresso-core = "3.6.1"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
-compose-plugin = "1.6.11"
+compose-plugin = "1.7.0-alpha02"
 junit = "4.13.2"
 kotlin = "2.0.0"
 koin = "4.0.0-RC1"
@@ -28,6 +28,7 @@ kotlin-test-junit = "1.9.25"
 sqldelight = "2.0.2"
 material = "1.6.11"
 stately-common = "2.0.7"
+napier = "2.7.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
@@ -79,6 +80,9 @@ sqldelight-native-driver = { module = "app.cash.sqldelight:native-driver", versi
 sqldelight-primitive-adapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
 sqldelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 stately-common = { module = "co.touchlab:stately-common", version.ref = "stately-common" } # (needed by SQLDeligt)
+
+# LOGGING
+napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
