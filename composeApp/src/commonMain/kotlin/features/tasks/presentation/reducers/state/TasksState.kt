@@ -9,7 +9,7 @@ import kotlinx.collections.immutable.persistentListOf
 data class TasksState(
     val isLoading: Boolean = false,
     val isDialogVisible: Boolean = false,
-    val tasks: ImmutableList<TasksStateItem> = persistentListOf(),
+    val tasks: ImmutableList<TasksItemState> = persistentListOf(),
     val error: String? = null,
-    val selectedTask: TasksStateItem? = null,
+    val selectedTask: TasksItemState? = null,
 ): Reducer.ViewState

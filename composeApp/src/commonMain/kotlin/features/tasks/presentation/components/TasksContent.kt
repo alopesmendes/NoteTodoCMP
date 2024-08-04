@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import core.presentation.components.ErrorComponent
 import core.presentation.components.LoadingComponent
 import features.tasks.presentation.reducers.state.TasksState
-import features.tasks.presentation.reducers.state.TasksStateItem
+import features.tasks.presentation.reducers.state.TasksItemState
 
 @Composable
 fun TaskContent(
@@ -15,7 +15,7 @@ fun TaskContent(
     onVisibilityChange: (Boolean) -> Unit = {},
     onTaskClick: (Long) -> Unit = {},
     onTaskDelete: (Long) -> Unit = {},
-    onSaveTask: (TasksStateItem) -> Unit = {},
+    onSaveTask: (TasksItemState) -> Unit = {},
 ) {
     when {
         state.isLoading -> {
@@ -37,7 +37,7 @@ fun TaskContent(
             }
             TasksListView(
                 modifier = Modifier.fillMaxWidth(),
-                tasksStateItems = state.tasks,
+                tasksItemStates = state.tasks,
                 onTaskClick = {
                     onTaskClick(it.id)
                 },

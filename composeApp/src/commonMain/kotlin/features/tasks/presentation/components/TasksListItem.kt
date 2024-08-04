@@ -24,14 +24,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import features.tasks.presentation.reducers.state.PriorityState
 import features.tasks.presentation.reducers.state.StatusState
-import features.tasks.presentation.reducers.state.TasksStateItem
+import features.tasks.presentation.reducers.state.TasksItemState
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TasksListItem(
     modifier: Modifier = Modifier,
-    task: TasksStateItem,
+    task: TasksItemState,
     onClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
@@ -99,7 +99,7 @@ fun TasksListItem(
 @Composable
 fun TasksListItemPreview() {
     TasksListItem(
-        task = TasksStateItem(
+        task = TasksItemState(
             id = 1L,
             title = "Title",
             description = "Description",

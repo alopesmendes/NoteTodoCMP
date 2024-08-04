@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import core.presentation.components.DynamicSelectMenu
 import features.tasks.presentation.reducers.state.PriorityState
 import features.tasks.presentation.reducers.state.StatusState
-import features.tasks.presentation.reducers.state.TasksStateItem
+import features.tasks.presentation.reducers.state.TasksItemState
 import notetodo.composeapp.generated.resources.Res
 import notetodo.composeapp.generated.resources.note_dialog_title
 import org.jetbrains.compose.resources.stringResource
@@ -28,8 +28,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun TaskForm(
     modifier: Modifier = Modifier,
-    state: TasksStateItem,
-    onStateChange: (TasksStateItem) -> Unit = {},
+    state: TasksItemState,
+    onStateChange: (TasksItemState) -> Unit = {},
 ) {
 
     Column(
@@ -99,7 +99,7 @@ fun TaskForm(
 @Composable
 fun TaskFormPreview() {
     TaskForm(
-        state = TasksStateItem(
+        state = TasksItemState(
             title = "Title",
             description = "Description"
         )

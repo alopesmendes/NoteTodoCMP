@@ -7,12 +7,11 @@ import features.tasks.domain.entities.Task
 import features.tasks.presentation.reducers.state.PriorityState
 import features.tasks.presentation.reducers.state.StatusState
 import features.tasks.presentation.reducers.state.TasksState
-import features.tasks.presentation.reducers.state.TasksStateItem
-import kotlinx.collections.immutable.persistentListOf
+import features.tasks.presentation.reducers.state.TasksItemState
 import kotlinx.collections.immutable.toPersistentList
 import kotlin.jvm.JvmName
 
-fun Task.mapToTaskStateItem() = TasksStateItem(
+fun Task.mapToTaskStateItem() = TasksItemState(
     id = id,
     title = title,
     description = description,
@@ -71,4 +70,18 @@ fun Status.mapToStatusState(): StatusState = when (this) {
     Status.TODO -> StatusState.Todo
     Status.IN_PROGRESS -> StatusState.InProgress
     Status.DONE -> StatusState.Done
+}
+
+fun PriorityState.mapToPriority(): Priority = when (this) {
+    PriorityState.Lowest -> Priority.LOWEST
+    PriorityState.Low -> Priority.LOW
+    PriorityState.Medium -> Priority.MEDIUM
+    PriorityState.High -> Priority.HIGH
+    PriorityState.Highest -> Priority.HIGHEST
+}
+
+fun StatusState.mapToStatus(): Status = when (this) {
+    StatusState.Todo -> Status.TODO
+    StatusState.InProgress -> Status.IN_PROGRESS
+    StatusState.Done -> Status.DONE
 }

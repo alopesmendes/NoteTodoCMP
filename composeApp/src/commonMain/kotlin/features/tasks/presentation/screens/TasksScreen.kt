@@ -8,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import core.presentation.navigation.Routes
-import core.presentation.navigation.bottomBarItems
 import core.presentation.state.ScaffoldItemsState
 import core.utils.Tools.rememberFlowWithLifecycle
 import features.tasks.presentation.components.TaskContent
@@ -40,7 +39,7 @@ fun TasksScreen(
                 floatingActionButtonIcon = Icons.Outlined.Add,
                 onFloatingActionButtonClick = {
                     viewModel.sendIntent(
-                        TasksIntent.TaskDetailDialogVisibility(true)
+                        TasksIntent.TaskDetailDialogVisibility(isVisible = true)
                     )
                 },
             )
@@ -61,7 +60,10 @@ fun TasksScreen(
         state = state,
         onTaskClick = {
             viewModel.sendIntent(
-                TasksIntent.TaskDetailDialogVisibility(true)
+                TasksIntent.TaskDetailDialogVisibility(
+                    isVisible = true,
+                    id = it,
+                )
             )
         },
         onTaskDelete = {
@@ -76,7 +78,7 @@ fun TasksScreen(
         },
         onSaveTask = {
             viewModel.sendIntent(
-                TasksIntent.CreateTask(it.title, it.description ?: "")
+                TasksIntent.SaveTask(it)
             )
         }
     )

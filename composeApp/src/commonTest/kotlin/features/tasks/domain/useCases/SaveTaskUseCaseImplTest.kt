@@ -24,7 +24,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @ExperimentalCoroutinesApi
-class CreateTaskUseCaseImplTest {
+class SaveTaskUseCaseImplTest {
     private val dispatcher = Dispatchers.Unconfined
 
     private lateinit var taskRepository: TaskRepository

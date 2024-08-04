@@ -8,6 +8,8 @@ import features.tasks.domain.entities.Status
 import features.tasks.domain.useCases.CreateTaskUseCase
 import features.tasks.domain.useCases.DeleteTaskUseCase
 import features.tasks.domain.useCases.GetTasksUseCase
+import features.tasks.presentation.mapper.mapToPriority
+import features.tasks.presentation.mapper.mapToStatus
 import features.tasks.presentation.mapper.mapToTasksState
 import features.tasks.presentation.reducers.state.TasksState
 import io.github.aakira.napier.Napier
@@ -46,14 +48,15 @@ class TasksReducer(
                 updateState.invoke { it.copy(isDialogVisible = intent.isVisible, isLoading = false) }
             }
 
-            is TasksIntent.CreateTask -> {
+            is TasksIntent.SaveTask -> {
                 Napier.i("Creating task... $intent")
                 createTaskUseCase(
                     CreateTask(
-                        title = intent.title,
-                        description = intent.description,
-                        priority = Priority.LOW,
-                        status = Status.TODO, categoryId = null,
+                        title = intent.taskItem.title,
+                        description = intent.taskItem.description,
+                        priority = intent.taskItem.priority.mapToPriority(),
+                        status = intent.taskItem.status.mapToStatus(),
+                        categoryId = null,
                     )
                 ).collect { state ->
                     Napier.i("Creating task... $state")
