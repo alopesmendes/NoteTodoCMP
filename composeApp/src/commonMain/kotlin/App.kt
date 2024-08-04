@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import core.presentation.components.MainScaffold
 import core.presentation.navigation.NavigationHost
+import core.presentation.navigation.bottomBarItems
 import core.presentation.state.ScaffoldItemsState
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
@@ -29,6 +30,7 @@ fun App() {
                                 route.navigateTo()
                             )
                         },
+                        bottomBarItems = bottomBarItems,
                     )
                 )
             }

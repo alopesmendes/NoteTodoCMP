@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="notes_title">Tâches</string>
-    <string name="note_dialog_title">Tâche: %1$s</string>
+    <string name="note_dialog_title">Tâche : %1$s</string>
     <string name="categories_title">Categories</string>
     <string name="category_dialog_title">Categorie: %1$s</string>
     <string name="settings_title">Paramètres</string>
@@ -9,4 +9,14 @@
     <string name="save_category">Sauvegarder la catégorie</string>
     <string name="cancel">Annuler</string>
     <string name="confirm">Confirmer</string>
+    <string name="priority">Priorité</string>
+    <string name="status">Status</string>
+    <string name="priority_lowest">Inutile</string>
+    <string name="priority_low">Bas</string>
+    <string name="priority_medium">Moyen</string>
+    <string name="priority_high">Haut</string>
+    <string name="priority_highest">Important</string>
+    <string name="status_todo">A faire</string>
+    <string name="status_in_progress">En cours</string>
+    <string name="status_done">Terminé</string>
 </resources>

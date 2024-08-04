@@ -35,7 +35,6 @@ fun TasksScreen(
         onScaffoldItemsState(
             scaffoldItemsState.copy(
                 currentRoute = Routes.Tasks,
-                bottomBarItems = bottomBarItems,
                 floatingActionButtonVisible = true,
                 floatingActionButtonText = Res.string.save_note,
                 floatingActionButtonIcon = Icons.Outlined.Add,

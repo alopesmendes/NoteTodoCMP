@@ -171,5 +171,8 @@ sqldelight {
             packageName.set("org.ailtontech.notetodo.database")
         }
     }
+}
 
+compose.resources {
+    generateResClass = always
 }

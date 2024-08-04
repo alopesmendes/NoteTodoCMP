@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import features.tasks.presentation.reducers.state.PriorityState
+import features.tasks.presentation.reducers.state.StatusState
 import features.tasks.presentation.reducers.state.TasksStateItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
@@ -48,8 +50,8 @@ fun TasksListViewPreview() {
                 id = it.toLong(),
                 title = "Title $it",
                 description = "Description $it",
-                priority = "LOWEST",
-                status = "IN_PROGRESS"
+                priority = PriorityState.Lowest,
+                status = StatusState.Todo,
             )
         }.toPersistentList()
     )

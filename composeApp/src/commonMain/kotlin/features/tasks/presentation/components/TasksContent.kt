@@ -27,14 +27,14 @@ fun TaskContent(
                 error = state.error
             )
         }
-        state.isDialogVisible -> {
-            TaskDialogView(
-                isVisible = state.isDialogVisible,
-                onVisibilityChange = onVisibilityChange,
-                onSave = onSaveTask
-            )
-        }
         else -> {
+            if (state.isDialogVisible) {
+                TaskDialogView(
+                    isVisible = state.isDialogVisible,
+                    onVisibilityChange = onVisibilityChange,
+                    onSave = onSaveTask
+                )
+            }
             TasksListView(
                 modifier = Modifier.fillMaxWidth(),
                 tasksStateItems = state.tasks,

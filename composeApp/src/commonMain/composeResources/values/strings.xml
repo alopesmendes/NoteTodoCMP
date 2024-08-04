@@ -10,4 +10,14 @@
     <string name="save_category">Save Category</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
+    <string name="priority">Priority</string>
+    <string name="status">Status</string>
+    <string name="priority_lowest">Lowest</string>
+    <string name="priority_low">Low</string>
+    <string name="priority_medium">Medium</string>
+    <string name="priority_high">High</string>
+    <string name="priority_highest">Highest</string>
+    <string name="status_todo">Todo</string>
+    <string name="status_in_progress">In Progress</string>
+    <string name="status_done">Done</string>
 </resources>

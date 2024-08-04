@@ -32,7 +32,6 @@ fun CategoryScreen(
         onScaffoldItemsStateChange(
             scaffoldItemsState.copy(
                 currentRoute = Routes.Categories,
-                bottomBarItems = bottomBarItems,
                 floatingActionButtonIcon = Icons.Outlined.Add,
                 floatingActionButtonText = Res.string.save_category,
                 floatingActionButtonVisible = true,

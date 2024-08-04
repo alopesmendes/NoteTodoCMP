@@ -22,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import features.tasks.presentation.reducers.state.PriorityState
+import features.tasks.presentation.reducers.state.StatusState
 import features.tasks.presentation.reducers.state.TasksStateItem
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -101,8 +103,8 @@ fun TasksListItemPreview() {
             id = 1L,
             title = "Title",
             description = "Description",
-            priority = "LOWEST",
-            status = "IN_PROGRESS"
+            priority = PriorityState.Lowest,
+            status = StatusState.Todo,
         ),
         onClick = { },
         onDeleteClick = { }

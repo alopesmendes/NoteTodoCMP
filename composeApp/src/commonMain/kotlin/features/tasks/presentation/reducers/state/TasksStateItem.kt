@@ -8,6 +8,6 @@ data class TasksStateItem(
     val id: Long = 0L,
     val title: String = "",
     val description: String? = null,
-    val priority: String = "",
-    val status: String = "",
+    val priority: PriorityState = PriorityState.Lowest,
+    val status: StatusState = StatusState.Todo,
 )
