@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import core.presentation.state.ScaffoldItemsState
 import features.categories.presentation.screens.CategoryScreen
+import features.settings.presentation.screens.SettingsScreen
 import features.tasks.presentation.screens.TasksScreen
 
 @Composable
@@ -39,7 +40,11 @@ fun NavigationHost(
         }
 
         composable(route = Routes.Settings.fullRoute(), arguments = Routes.Settings.navParams()) {
-
+            SettingsScreen(
+                modifier = Modifier.fillMaxSize(),
+                scaffoldItemsState = scaffoldItemsState,
+                onScaffoldItemsState = onScaffoldItemsState,
+            )
         }
     }
 }

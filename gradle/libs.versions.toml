@@ -29,6 +29,7 @@ sqldelight = "2.0.2"
 material = "1.6.11"
 stately-common = "2.0.7"
 napier = "2.7.1"
+datastore = "1.1.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
@@ -83,6 +84,9 @@ stately-common = { module = "co.touchlab:stately-common", version.ref = "stately
 
 # LOGGING
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
+
+# DATASTORE
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
