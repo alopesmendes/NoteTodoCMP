@@ -86,6 +86,9 @@ kotlin {
 
             // LOGGING
             implementation(libs.napier)
+
+            // Datastore
+            implementation(libs.datastore.preferences)
         }
 
         jvmMain.dependencies {

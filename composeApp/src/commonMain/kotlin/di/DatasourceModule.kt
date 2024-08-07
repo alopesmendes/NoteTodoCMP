@@ -1,6 +1,10 @@
 package di
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import core.DatastorePreferencesFactory
 import core.createDatabase
+import core.utils.Constants.DATASTORE_FILENAME
 import features.categories.data.datasources.CategoryDatasource
 import features.categories.data.datasources.CategoryLocalDatasource
 import features.tasks.data.datasources.TaskDatasource
@@ -12,6 +16,10 @@ import org.koin.dsl.module
 val datasourceModule = module {
     single<NoteDatabase> {
         createDatabase(get())
+    }
+
+    single<DataStore<Preferences>> {
+        get<DatastorePreferencesFactory>().create(DATASTORE_FILENAME)
     }
 
     single<TaskDatasource> { TaskLocalDatasourceImpl(get()) }
