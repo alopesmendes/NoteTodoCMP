@@ -2,6 +2,10 @@ package di
 
 import features.categories.domain.useCases.GetCategoriesUseCase
 import features.categories.domain.useCases.GetCategoriesUseCaseImpl
+import features.settings.domain.useCases.GetUserUseCase
+import features.settings.domain.useCases.GetUserUseCaseImpl
+import features.settings.domain.useCases.SaveUserUseCase
+import features.settings.domain.useCases.SaveUserUseCaseImpl
 import features.tasks.domain.useCases.CreateTaskUseCase
 import features.tasks.domain.useCases.CreateTaskUseCaseImpl
 import features.tasks.domain.useCases.DeleteTaskUseCase
@@ -20,4 +24,8 @@ val useCaseModule = module {
     singleOf(::DeleteTaskUseCaseImpl) { bind<DeleteTaskUseCase>() }
 
     singleOf(::CreateTaskUseCaseImpl) { bind<CreateTaskUseCase>() }
+
+    singleOf(::GetUserUseCaseImpl) { bind<GetUserUseCase>() }
+
+    singleOf(::SaveUserUseCaseImpl) { bind<SaveUserUseCase>() }
 }
