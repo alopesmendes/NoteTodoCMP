@@ -7,5 +7,7 @@ import core.utils.Reducer
 data class SettingsState(
     val isLoading: Boolean = false,
     val error: String? = null,
-    val user: UserState = UserState(),
+    val firstname: String = "",
+    val lastname: String = "",
+    val nickname: String = "",
 ): Reducer.ViewState

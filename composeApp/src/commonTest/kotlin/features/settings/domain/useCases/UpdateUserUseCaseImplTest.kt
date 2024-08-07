@@ -22,7 +22,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @ExperimentalCoroutinesApi
-class SaveUserUseCaseImplTest {
+class UpdateUserUseCaseImplTest {
     private val dispatcher = Dispatchers.Unconfined
 
     private lateinit var settingsRepository: SettingsRepository

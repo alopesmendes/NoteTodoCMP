@@ -25,12 +25,23 @@ class SettingsReducer(
                     updateState.invoke(state::mapToUserState)
                 }
             }
+            is SettingsIntent.UpdateUser -> {
+                updateState.invoke { state ->
+                    state.copy(
+                        isLoading = false,
+                        firstname = intent.firstname ?: state.firstname,
+                        lastname = intent.lastname ?: state.lastname,
+                        nickname = intent.nickname ?: state.nickname,
+                    )
+                }
+            }
+
             is SettingsIntent.SaveUser -> {
                 saveUserUseCase(
                     user = User(
                         firstname = intent.firstname,
                         lastname = intent.lastname,
-                        nickname = intent.nickname
+                        nickname = intent.nickname,
                     )
                 ).collectLatest { state ->
                     updateState.invoke(state::mapToUserState)

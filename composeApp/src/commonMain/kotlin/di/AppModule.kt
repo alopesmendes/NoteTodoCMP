@@ -5,7 +5,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import org.koin.core.context.startKoin
 import org.koin.core.qualifier.named
-import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 
 val appModule = module {
@@ -24,11 +23,8 @@ val modules = listOf(
     appModule,
 )
 
-fun initializeKoin(
-    appDeclaration: KoinAppDeclaration = {}
-) {
+fun initializeKoin() {
     startKoin {
-        appDeclaration()
         modules(modules)
     }
 }
