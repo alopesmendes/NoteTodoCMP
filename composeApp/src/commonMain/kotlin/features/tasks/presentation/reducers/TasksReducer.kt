@@ -1,15 +1,25 @@
 package features.tasks.presentation.reducers
 
 import core.utils.Reducer
+import core.utils.onSuccess
+import features.tasks.domain.entities.CreateTask
+import features.tasks.domain.entities.Priority
+import features.tasks.domain.entities.Status
+import features.tasks.domain.useCases.CreateTaskUseCase
+import features.tasks.domain.useCases.DeleteTaskUseCase
 import features.tasks.domain.useCases.GetTasksUseCase
+import features.tasks.presentation.mapper.mapToPriority
+import features.tasks.presentation.mapper.mapToStatus
 import features.tasks.presentation.mapper.mapToTasksState
 import features.tasks.presentation.reducers.state.TasksState
-import kotlinx.coroutines.flow.collectLatest
+import io.github.aakira.napier.Napier
 import kotlin.reflect.KFunction1
 
 class TasksReducer(
     private val getTasksUseCase: GetTasksUseCase,
-): Reducer<TasksState, TasksIntent, TasksEffect> {
+    private val deleteTaskUseCase: DeleteTaskUseCase,
+    private val createTaskUseCase: CreateTaskUseCase,
+) : Reducer<TasksState, TasksIntent, TasksEffect> {
     override suspend fun reduce(
         updateState: KFunction1<(TasksState) -> TasksState, Unit>,
         intent: TasksIntent,
@@ -18,8 +28,44 @@ class TasksReducer(
     ) {
         when (intent) {
             is TasksIntent.FetchTasks -> {
-                getTasksUseCase().collectLatest { state ->
+                getTasksUseCase().collect { state ->
+                    Napier.i("Fetching tasks... $state")
                     updateState.invoke(state::mapToTasksState)
+                }
+            }
+
+            is TasksIntent.DeleteTask -> {
+                deleteTaskUseCase(intent.id).collect { state ->
+                    updateState.invoke(state::mapToTasksState)
+
+                    state.onSuccess {
+                        sendIntent(TasksIntent.FetchTasks)
+                    }
+                }
+            }
+
+            is TasksIntent.TaskDetailDialogVisibility -> {
+                updateState.invoke { it.copy(isDialogVisible = intent.isVisible, isLoading = false) }
+            }
+
+            is TasksIntent.SaveTask -> {
+                Napier.i("Creating task... $intent")
+                createTaskUseCase(
+                    CreateTask(
+                        title = intent.taskItem.title,
+                        description = intent.taskItem.description,
+                        priority = intent.taskItem.priority.mapToPriority(),
+                        status = intent.taskItem.status.mapToStatus(),
+                        categoryId = null,
+                    )
+                ).collect { state ->
+                    Napier.i("Creating task... $state")
+                    updateState.invoke(state::mapToTasksState)
+
+                    state.onSuccess {
+                        Napier.i("Task created successfully")
+                        sendIntent(TasksIntent.FetchTasks)
+                    }
                 }
             }
         }

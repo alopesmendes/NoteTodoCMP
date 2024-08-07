@@ -1,19 +1,20 @@
 package features.tasks.domain.useCases
 
 import core.utils.State
-import features.tasks.domain.entities.Task
+import features.tasks.domain.entities.CreateTask
 import features.tasks.domain.repositories.TaskRepository
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class GetTasksUseCaseImpl(
+class CreateTaskUseCaseImpl(
     private val taskRepository: TaskRepository
-): GetTasksUseCase {
-    override operator fun invoke(): Flow<State<List<Task>>> = flow {
+): CreateTaskUseCase {
+    override fun invoke(createTask: CreateTask): Flow<State<Unit>> = flow {
         emit(State.Loading)
 
         try {
-            val result = taskRepository.getTasks()
+            val result = taskRepository.createTask(createTask)
             val state = result.fold(
                 onSuccess = {
                     State.Success(it)
@@ -22,8 +23,10 @@ class GetTasksUseCaseImpl(
                     State.Error(it.message ?: "")
                 }
             )
+            Napier.i("State: $state")
             emit(state)
         } catch (e: Exception) {
+            Napier.e("Error: ${e.message}")
             emit(State.Error(e.message ?: ""))
         }
     }

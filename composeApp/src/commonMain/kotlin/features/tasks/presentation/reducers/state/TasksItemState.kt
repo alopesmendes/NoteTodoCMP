@@ -1,13 +1,13 @@
 package features.tasks.presentation.reducers.state
 
 import androidx.compose.runtime.Immutable
-import org.jetbrains.compose.resources.StringResource
 
 @Immutable
-data class TasksStateItem(
+data class TasksItemState(
     val id: Long = 0L,
     val title: String = "",
     val description: String? = null,
-    val priority: String = "",
-    val status: String = "",
+    val priority: PriorityState = PriorityState.Lowest,
+    val status: StatusState = StatusState.Todo,
+    val isCreated: Boolean = false,
 )

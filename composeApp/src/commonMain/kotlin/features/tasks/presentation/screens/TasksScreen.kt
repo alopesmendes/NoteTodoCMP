@@ -8,9 +8,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import core.presentation.navigation.Routes
-import core.presentation.navigation.bottomBarItems
 import core.presentation.state.ScaffoldItemsState
+import core.utils.Tools.rememberFlowWithLifecycle
 import features.tasks.presentation.components.TaskContent
+import features.tasks.presentation.reducers.TasksEffect
+import features.tasks.presentation.reducers.TasksIntent
 import features.tasks.presentation.viewModels.TasksViewModel
 import notetodo.composeapp.generated.resources.Res
 import notetodo.composeapp.generated.resources.save_note
@@ -26,27 +28,58 @@ fun TasksScreen(
     onScaffoldItemsState: (ScaffoldItemsState) -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val effect = rememberFlowWithLifecycle(viewModel.effects)
 
     LaunchedEffect(Unit) {
         onScaffoldItemsState(
             scaffoldItemsState.copy(
                 currentRoute = Routes.Tasks,
-                bottomBarItems = bottomBarItems,
                 floatingActionButtonVisible = true,
                 floatingActionButtonText = Res.string.save_note,
                 floatingActionButtonIcon = Icons.Outlined.Add,
                 onFloatingActionButtonClick = {
-
+                    viewModel.sendIntent(
+                        TasksIntent.TaskDetailDialogVisibility(isVisible = true)
+                    )
                 },
             )
         )
+    }
+
+    LaunchedEffect(effect) {
+        effect.collect {
+            when (it) {
+                is TasksEffect.ShowDialogTaskDetail -> {
+                }
+            }
+        }
     }
 
     TaskContent(
         modifier = modifier,
         state = state,
         onTaskClick = {
-
+            viewModel.sendIntent(
+                TasksIntent.TaskDetailDialogVisibility(
+                    isVisible = true,
+                    id = it,
+                )
+            )
         },
+        onTaskDelete = {
+            viewModel.sendIntent(
+                TasksIntent.DeleteTask(it)
+            )
+        },
+        onVisibilityChange = {
+            viewModel.sendIntent(
+                TasksIntent.TaskDetailDialogVisibility(it)
+            )
+        },
+        onSaveTask = {
+            viewModel.sendIntent(
+                TasksIntent.SaveTask(it)
+            )
+        }
     )
 }

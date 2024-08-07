@@ -8,7 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import features.tasks.presentation.reducers.state.TasksStateItem
+import features.tasks.presentation.reducers.state.PriorityState
+import features.tasks.presentation.reducers.state.StatusState
+import features.tasks.presentation.reducers.state.TasksItemState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -16,19 +18,23 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun TasksListView(
     modifier: Modifier = Modifier,
-    tasksStateItems: ImmutableList<TasksStateItem>,
-    onTaskClick: (TasksStateItem) -> Unit = {},
+    tasksItemStates: ImmutableList<TasksItemState>,
+    onTaskClick: (TasksItemState) -> Unit = {},
+    onTaskDelete: (TasksItemState) -> Unit = {},
 ) {
     LazyColumn(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        items(tasksStateItems, key = { it.id }) {
+        items(tasksItemStates, key = { it.id }) {
             TasksListItem(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .animateItem(),
                 task = it,
-                onClick = { onTaskClick(it) }
+                onClick = { onTaskClick(it) },
+                onDeleteClick = { onTaskDelete(it) }
             )
         }
     }
@@ -38,13 +44,13 @@ fun TasksListView(
 @Composable
 fun TasksListViewPreview() {
     TasksListView(
-        tasksStateItems = (1..10).map {
-            TasksStateItem(
+        tasksItemStates = (1..10).map {
+            TasksItemState(
                 id = it.toLong(),
                 title = "Title $it",
                 description = "Description $it",
-                priority = "LOWEST",
-                status = "IN_PROGRESS"
+                priority = PriorityState.Lowest,
+                status = StatusState.Todo,
             )
         }.toPersistentList()
     )

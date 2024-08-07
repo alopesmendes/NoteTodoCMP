@@ -37,6 +37,10 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.core.ktx)
+            implementation(libs.androidx.appcompat)
+            implementation(libs.androidx.material)
+            implementation(libs.androidx.constraintlayout)
 
             // KOTLINX
             implementation(libs.kotlinx.coroutines.android)
@@ -79,6 +83,9 @@ kotlin {
             implementation(libs.sqldelight.primitive.adapters)
             implementation(libs.sqldelight.coroutines.extensions)
             implementation(libs.stately.common)
+
+            // LOGGING
+            implementation(libs.napier)
         }
 
         jvmMain.dependencies {
@@ -164,5 +171,8 @@ sqldelight {
             packageName.set("org.ailtontech.notetodo.database")
         }
     }
+}
 
+compose.resources {
+    generateResClass = always
 }

@@ -6,12 +6,10 @@ import assertk.assertions.isEqualTo
 import core.utils.State
 import dev.mokkery.answering.returns
 import dev.mokkery.every
+import dev.mokkery.matcher.any
 import dev.mokkery.mock
 import dev.mokkery.verify
 import dev.mokkery.verify.VerifyMode.Companion.exactly
-import features.tasks.domain.entities.Priority
-import features.tasks.domain.entities.Status
-import features.tasks.domain.entities.Task
 import features.tasks.domain.repositories.TaskRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -23,17 +21,17 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @ExperimentalCoroutinesApi
-class GetTasksUseCaseImplTest {
+class DeleteTaskUseCaseImplTest{
     private val dispatcher = Dispatchers.Unconfined
 
     private lateinit var taskRepository: TaskRepository
-    private lateinit var getTasksUseCase: GetTasksUseCase
+    private lateinit var deleteTaskUseCase: DeleteTaskUseCase
 
     @BeforeTest
     fun setUp() {
         Dispatchers.setMain(dispatcher)
         taskRepository = mock()
-        getTasksUseCase = GetTasksUseCaseImpl(taskRepository)
+        deleteTaskUseCase = DeleteTaskUseCaseImpl(taskRepository)
     }
 
     @AfterTest
@@ -44,28 +42,19 @@ class GetTasksUseCaseImplTest {
     @Test
     fun `should get all tasks successfully when data is available`() = runTest {
         // given:
-        val tasks = List(10) {
-            Task(
-                id = it.toLong(),
-                title = "Title $it",
-                description = "Description $it",
-                priority = Priority.MEDIUM,
-                status = Status.IN_PROGRESS,
-                categoryId = null
-            )
-        }
-        val result = Result.success(tasks)
+        val id = 1L
+        val result = Result.success(Unit)
 
         // when:
-        every { taskRepository.getTasks() } returns result
-        val actual = getTasksUseCase()
+        every { taskRepository.deleteTask(id) } returns result
+        val actual = deleteTaskUseCase(id)
 
         // then:
         actual.test {
-            verify(exactly(1)) { taskRepository.getTasks() }
+            verify(exactly(1)) { taskRepository.deleteTask(any()) }
 
             assertThat(awaitItem()).isEqualTo(State.Loading)
-            assertThat(awaitItem()).isEqualTo(State.Success(tasks))
+            assertThat(awaitItem()).isEqualTo(State.Success(Unit))
 
             awaitComplete()
         }
@@ -74,16 +63,17 @@ class GetTasksUseCaseImplTest {
     @Test
     fun `should fails to get all tasks when request fails`() = runTest {
         // given:
+        val id = 1L
         val exception = Exception()
-        val result = Result.failure<List<Task>>(exception)
+        val result = Result.failure<Unit>(exception)
 
         // when:
-        every { taskRepository.getTasks() } returns result
-        val actual = getTasksUseCase()
+        every { taskRepository.deleteTask(id) } returns result
+        val actual = deleteTaskUseCase(id)
 
         // then:
         actual.test {
-            verify(exactly(1)) { taskRepository.getTasks() }
+            verify(exactly(1)) { taskRepository.deleteTask(any()) }
 
             assertThat(awaitItem()).isEqualTo(State.Loading)
             assertThat(awaitItem()).isEqualTo(State.Error(exception.message ?: ""))

@@ -5,5 +5,5 @@ import core.utils.Reducer
 
 @Immutable
 sealed interface TasksEffect : Reducer.ViewEffect {
-    data class NavigateToTaskDetails(val taskId: Long): TasksEffect
+    data class ShowDialogTaskDetail(val taskId: Long? = null): TasksEffect
 }
